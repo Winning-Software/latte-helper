@@ -9,10 +9,14 @@ use Latte\Loaders\FileLoader;
 
 class EngineBuilder
 {
-    public static function getEngine(): Engine
+    public static function getEngine(string $templateDir): Engine
     {
+        if (!str_starts_with($templateDir, '/')) {
+            $templateDir = "/{$templateDir}";
+        }
+
         $engine = new Engine();
-        $fileLoader = new FileLoader(EngineBuilder::getProjectDirectory());
+        $fileLoader = new FileLoader(sprintf('%s%s', EngineBuilder::getProjectDirectory(), $templateDir));
 
         $engine->setTempDirectory(EngineBuilder::getProjectDirectory() . '/var/cache/latte');
         $engine->setLoader($fileLoader);
