@@ -1,7 +1,20 @@
 {
-  "name": "cloudbase/latte-controller",
+  "name": "cloudbase/latte-helper",
+  "autoload": {
+    "psr-4": {
+      "CloudBase\\LatteHelper\\": "src/"
+    }
+  },
   "require": {
     "latte/latte": "^3.0",
-    "psr/http-message": "^2.0"
-  }
+    "symfony/http-foundation": "^7.3"
+  },
+  "require-dev": {
+    "loomsoftware/badger": "^1.0"
+  },
+  "scripts": {
+    "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license ."
+  },
+  "version": "0.1.0",
+  "license": "GPL-3.0-or-later"
 }
