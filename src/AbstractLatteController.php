@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CloudBase\LatteHelper;
 
-use CloudBase\LatteController\EngineBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractLatteController

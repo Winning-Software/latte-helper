@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CloudBase\LatteController;
+namespace CloudBase\LatteHelper;
 
 use Latte\Engine;
 use Latte\Loaders\FileLoader;
