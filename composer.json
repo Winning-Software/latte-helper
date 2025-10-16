@@ -1,0 +1,7 @@
+{
+  "name": "cloudbase/latte-controller",
+  "require": {
+    "latte/latte": "^3.0",
+    "psr/http-message": "^2.0"
+  }
+}
