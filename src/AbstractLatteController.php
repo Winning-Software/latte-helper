@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace CloudBase\LatteHelper;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class AbstractLatteController
+abstract class AbstractLatteController extends AbstractController
 {
     protected string $templateDir = '/views';
 
