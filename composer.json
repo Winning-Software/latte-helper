@@ -18,6 +18,6 @@
   "scripts": {
     "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license ."
   },
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "GPL-3.0-or-later"
 }

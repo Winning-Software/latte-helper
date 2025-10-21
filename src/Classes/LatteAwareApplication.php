@@ -12,7 +12,7 @@ class LatteAwareApplication
 {
     private RequestStack $requestStack;
     private Session $session;
-    private UserInterface $user;
+    private ?UserInterface $user;
 
     public function getRequestStack(): RequestStack
     {
@@ -38,12 +38,12 @@ class LatteAwareApplication
         $this->session = $session;
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(UserInterface $user): void
+    public function setUser(?UserInterface $user): void
     {
         $this->user = $user;
     }
