@@ -1,5 +1,6 @@
 {
   "name": "cloudbase/latte-helper",
+  "description": "An unofficial helper package for rendering Latte templates in Symfony applications.",
   "autoload": {
     "psr-4": {
       "CloudBase\\LatteHelper\\": "src/"
