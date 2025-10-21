@@ -6,6 +6,11 @@
       "CloudBase\\LatteHelper\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "CloudBase\\LatteHelper\\Tests\\": "tests/"
+    }
+  },
   "require": {
     "latte/latte": "^3.0",
     "symfony/http-foundation": "^7.3",
@@ -13,11 +18,13 @@
     "symfony/security-bundle": "^7.3"
   },
   "require-dev": {
-    "loomsoftware/badger": "^1.0"
+    "loomsoftware/badger": "^1.0",
+    "phpunit/phpunit": "^12.4"
   },
   "scripts": {
-    "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license ."
+    "test": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --testdox --colors=always --coverage-html coverage --coverage-clover coverage/coverage.xml --testdox-html coverage/testdox.html && composer badge",
+    "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license . && ./vendor/bin/badger badge:coverage ."
   },
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "GPL-3.0-or-later"
 }
