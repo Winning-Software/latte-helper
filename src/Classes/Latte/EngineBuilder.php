@@ -32,11 +32,11 @@ class EngineBuilder
 
     private static function getProjectDirectory(): string
     {
-        if (file_exists(dirname(__DIR__, 3) . '/autoload.php')) {
-            return dirname(__DIR__, 4);
+        if (file_exists(dirname(__DIR__, 4) . '/autoload.php')) {
+            return dirname(__DIR__, 5);
         }
 
-        return dirname(__DIR__);
+        return dirname(__DIR__, 2);
     }
 
     /**
