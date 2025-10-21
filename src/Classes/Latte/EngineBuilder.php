@@ -30,13 +30,13 @@ class EngineBuilder
         return $engine;
     }
 
-    private static function getProjectDirectory(): string
+    public static function getProjectDirectory(): string
     {
-        if (file_exists(dirname(__DIR__, 4) . '/autoload.php')) {
-            return dirname(__DIR__, 5);
+        if (file_exists(dirname(__DIR__, 5) . '/autoload.php')) {
+            return dirname(__DIR__, 6);
         }
 
-        return dirname(__DIR__, 2);
+        return dirname(__DIR__, 3);
     }
 
     /**

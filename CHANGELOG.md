@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.3] - 2025-10-22
+### Added
+- Add PHP unit tests.
+
+### Fixed
+- Actual fix for template path resolution issue.
+
 ## [0.3.2] - 2025-10-22
 ### Fixed
 - Fix for template path resolution issue.
