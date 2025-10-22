@@ -21,6 +21,8 @@ class TestController extends AbstractLatteController
 
     public function index(): Response
     {
-        return $this->renderTemplate('index');
+        return $this->renderTemplate('index', [
+            'appName' => $this->getApp()->getEnvironmentOption('app_name'),
+        ]);
     }
 }
