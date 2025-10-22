@@ -34,14 +34,11 @@ class LatteControllerTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        // Configure container mock
         $container = $this->createMock(ContainerInterface::class);
-
         $container->method('has')
             ->willReturnCallback(function (string $id) {
                 return in_array($id, ['security.token_storage', 'request_stack'], true);
             });
-
         $container->method('get')
             ->willReturnCallback(function (string $id) use ($tokenStorage, $requestStack) {
                 return match ($id) {
