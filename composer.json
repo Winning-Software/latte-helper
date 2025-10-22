@@ -29,6 +29,6 @@
     "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license . && ./vendor/bin/badger badge:coverage .",
     "cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes"
   },
-  "version": "0.3.3",
+  "version": "0.3.4",
   "license": "GPL-3.0-or-later"
 }
