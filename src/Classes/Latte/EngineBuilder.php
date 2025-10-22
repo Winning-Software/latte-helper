@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace CloudBase\LatteHelper\Classes\Latte;
 
-use Composer\Autoload\ClassLoader;
 use Latte\Engine;
 use Latte\Extension;
 use Latte\Loaders\FileLoader;
-use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class EngineBuilder
 {
