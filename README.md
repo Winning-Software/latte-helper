@@ -6,7 +6,7 @@
 <!-- License Badge -->
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
 <!-- Coverage Badge -->
-<img src="https://img.shields.io/badge/Coverage-2.56%25-cb2f1c" alt="Coverage 2.56%">
+<img src="https://img.shields.io/badge/Coverage-31.71%25-cb6c1c" alt="Coverage 31.71%">
 </p>
 
 An unofficial helper package for rendering Latte templates in Symfony applications.

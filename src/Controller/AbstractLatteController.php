@@ -6,9 +6,8 @@ namespace CloudBase\LatteHelper\Controller;
 
 use CloudBase\LatteHelper\Classes\Latte\EngineBuilder;
 use CloudBase\LatteHelper\Classes\LatteAwareApplication;
-use Psr\Container\ContainerExceptionInterface;
+use CloudBase\LatteHelper\Classes\LatteAwareApplicationBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractLatteController extends AbstractController
@@ -44,17 +43,7 @@ abstract class AbstractLatteController extends AbstractController
             return $this->app;
         }
 
-        $this->app = new LatteAwareApplication();
-        $this->app->setUser($this->getUser());
-
-        try {
-            /**
-             * @var RequestStack $requestStack
-             */
-            $requestStack = $this->container->get('request_stack');
-            $this->app->setRequestStack($requestStack);
-        } catch (ContainerExceptionInterface $e) {
-        }
+        $this->app = LatteAwareApplicationBuilder::build($this->getUser(), $this->container);
 
         return $this->app;
     }
