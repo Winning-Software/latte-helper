@@ -16,6 +16,12 @@ abstract class AbstractLatteController extends AbstractController
     protected string $templateDir = '/views';
     private LatteAwareApplication $app;
 
+    /**
+     * @param string $template
+     * @param array<string, mixed> $data
+     *
+     * @return Response
+     */
     public function renderTemplate(string $template, array $data = []): Response
     {
         $engine = EngineBuilder::getEngine($this->templateDir);
@@ -34,7 +40,6 @@ abstract class AbstractLatteController extends AbstractController
 
     protected function getApp(): LatteAwareApplication
     {
-
         if (isset($this->app)) {
             return $this->app;
         }
@@ -54,22 +59,13 @@ abstract class AbstractLatteController extends AbstractController
         return $this->app;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function globalData(): array
     {
-        $app = new LatteAwareApplication();
-        $app->setUser($this->getUser());
-
-        try {
-            /**
-             * @var RequestStack $requestStack
-             */
-            $requestStack = $this->container->get('request_stack');
-            $app->setRequestStack($requestStack);
-        } catch (ContainerExceptionInterface $e) {
-        }
-
         return [
-            'app' => $app,
+            'app' => $this->getApp(),
         ];
     }
 }

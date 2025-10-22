@@ -51,14 +51,24 @@ class LatteAwareApplication
     /**
      * @param string $type
      *
-     * @return array<string, string>
+     * @return array<int, string>
      */
     public function getFlashes(string $type): array
     {
-        return $this->session->getFlashBag()->get($type);
+        $flashes = [];
+
+        foreach ($this->session->getFlashBag()->get($type) as $message) {
+            if (!is_string($message)) {
+                continue;
+            }
+
+            $flashes[] = $message;
+        }
+
+        return $flashes;
     }
 
-    public function getEnvironmentOption(string $envVarName): ?string
+    public function getEnvironmentOption(string $envVarName): mixed
     {
         return $_ENV[strtoupper($envVarName)] ?? null;
     }

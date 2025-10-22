@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace CloudBase\LatteHelper\Classes\Latte;
 
 use Latte\Engine;
+use Latte\Extension;
 use Latte\Loaders\FileLoader;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class EngineBuilder
 {
@@ -24,7 +26,11 @@ class EngineBuilder
         $engine->setLoader($fileLoader);
 
         foreach (EngineBuilder::loadConfig() as $class => $args) {
-            $engine->addExtension(new $class(...$args));
+            $extension = new $class(...$args);
+
+            if ($extension instanceof Extension) {
+                $engine->addExtension($extension);
+            }
         }
 
         return $engine;
@@ -40,21 +46,29 @@ class EngineBuilder
     }
 
     /**
-     * @return array<string, array<int, mixed>>
+     * @return array<string, array<int|string, mixed>>
      */
     private static function loadConfig(): array
     {
         $config = [];
         $configPath = sprintf(
-            '%s/%s',
+            '%s%s',
             EngineBuilder::getProjectDirectory(),
             EngineBuilder::EXTENSIONS_CONFIG_PATH
         );
 
         if (file_exists($configPath)) {
-            $config = require $configPath;
+            $loadedConfig = require $configPath;
+
+            if (is_array($loadedConfig)) {
+                foreach ($loadedConfig as $class => $args) {
+                    if (is_string($class) && is_array($args)) {
+                        $config[$class] = $args;
+                    }
+                }
+            }
         }
 
-        return is_array($config) ? $config : [];
+        return $config;
     }
 }
