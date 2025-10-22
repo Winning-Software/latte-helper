@@ -6,7 +6,7 @@
 <!-- License Badge -->
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
 <!-- Coverage Badge -->
-<img src="https://img.shields.io/badge/Coverage-31.71%25-cb6c1c" alt="Coverage 31.71%">
+<img src="https://img.shields.io/badge/Coverage-70.73%25-abcb1c" alt="Coverage 70.73%">
 </p>
 
 An unofficial helper package for rendering Latte templates in Symfony applications.
@@ -34,7 +34,7 @@ class IndexController extends AbstractLatteController
 }
 ```
 
-By default, templates are loaded from your project’s /views directory. You can change this by setting the `$templateDir` 
+By default, templates are loaded from your project’s `/views` directory. You can change this by setting the `$templateDir` 
 property on your controller.
 
 ## 🏗️ Custom Template Directory

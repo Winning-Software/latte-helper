@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CloudBase\LatteHelper\Classes\Latte;
 
+use Composer\Autoload\ClassLoader;
 use Latte\Engine;
 use Latte\Extension;
 use Latte\Loaders\FileLoader;
@@ -12,6 +13,9 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 class EngineBuilder
 {
     private const string EXTENSIONS_CONFIG_PATH = '/config/latte.php';
+    private const int VENDOR_AUTOLOAD_DEPTH = 5;
+    private const int VENDOR_PROJECT_ROOT_DEPTH = 6;
+    private const int STANDALONE_PROJECT_ROOT_DEPTH = 3;
 
     public static function getEngine(string $templateDir): Engine
     {
@@ -38,11 +42,11 @@ class EngineBuilder
 
     public static function getProjectDirectory(): string
     {
-        if (file_exists(dirname(__DIR__, 5) . '/autoload.php')) {
-            return dirname(__DIR__, 6);
+        if (file_exists(dirname(__DIR__, EngineBuilder::VENDOR_AUTOLOAD_DEPTH) . '/autoload.php')) {
+            return dirname(__DIR__, EngineBuilder::VENDOR_PROJECT_ROOT_DEPTH);
         }
 
-        return dirname(__DIR__, 3);
+        return dirname(__DIR__, EngineBuilder::STANDALONE_PROJECT_ROOT_DEPTH);
     }
 
     /**
