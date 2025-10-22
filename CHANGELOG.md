@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.4] - 2025-10-22
+### Added
+- Added PHP Stan at its strictest level.
+- Added PHP CS Fixer.
+
+### Changed
+- Increased overall code quality.
+- Increased test coverage from 2% to 75%.
+
 ## [0.3.3] - 2025-10-22
 ### Added
 - Add PHP unit tests.

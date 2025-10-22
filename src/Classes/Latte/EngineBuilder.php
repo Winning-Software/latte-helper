@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace CloudBase\LatteHelper\Classes\Latte;
 
 use Latte\Engine;
+use Latte\Extension;
 use Latte\Loaders\FileLoader;
 
 class EngineBuilder
 {
     private const string EXTENSIONS_CONFIG_PATH = '/config/latte.php';
+    private const int VENDOR_AUTOLOAD_DEPTH = 5;
+    private const int VENDOR_PROJECT_ROOT_DEPTH = 6;
+    private const int STANDALONE_PROJECT_ROOT_DEPTH = 3;
 
     public static function getEngine(string $templateDir): Engine
     {
@@ -24,7 +28,11 @@ class EngineBuilder
         $engine->setLoader($fileLoader);
 
         foreach (EngineBuilder::loadConfig() as $class => $args) {
-            $engine->addExtension(new $class(...$args));
+            $extension = new $class(...$args);
+
+            if ($extension instanceof Extension) {
+                $engine->addExtension($extension);
+            }
         }
 
         return $engine;
@@ -32,29 +40,37 @@ class EngineBuilder
 
     public static function getProjectDirectory(): string
     {
-        if (file_exists(dirname(__DIR__, 5) . '/autoload.php')) {
-            return dirname(__DIR__, 6);
+        if (file_exists(dirname(__DIR__, EngineBuilder::VENDOR_AUTOLOAD_DEPTH) . '/autoload.php')) {
+            return dirname(__DIR__, EngineBuilder::VENDOR_PROJECT_ROOT_DEPTH);
         }
 
-        return dirname(__DIR__, 3);
+        return dirname(__DIR__, EngineBuilder::STANDALONE_PROJECT_ROOT_DEPTH);
     }
 
     /**
-     * @return array<string, array<int, mixed>>
+     * @return array<string, array<int|string, mixed>>
      */
     private static function loadConfig(): array
     {
         $config = [];
         $configPath = sprintf(
-            '%s/%s',
+            '%s%s',
             EngineBuilder::getProjectDirectory(),
             EngineBuilder::EXTENSIONS_CONFIG_PATH
         );
 
         if (file_exists($configPath)) {
-            $config = require $configPath;
+            $loadedConfig = require $configPath;
+
+            if (is_array($loadedConfig)) {
+                foreach ($loadedConfig as $class => $args) {
+                    if (is_string($class) && is_array($args)) {
+                        $config[$class] = $args;
+                    }
+                }
+            }
         }
 
-        return is_array($config) ? $config : [];
+        return $config;
     }
 }
