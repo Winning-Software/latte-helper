@@ -35,4 +35,4 @@ jobs:
         run: composer cs
 
       - name: Run PHP Unit Tests
-        run: composer unit
+        run: mkdir -p ./var/cache/latte && composer unit
