@@ -24,8 +24,9 @@
     "friendsofphp/php-cs-fixer": "^3.89"
   },
   "scripts": {
-    "stan": "./vendor/bin/phpstan analyse -c phpstan.neon",
-    "test": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --testdox --colors=always --coverage-html coverage --coverage-clover coverage/coverage.xml --testdox-html coverage/testdox.html && composer badge",
+    "stan": "./vendor/bin/phpstan analyse --no-progress -c phpstan.neon",
+    "unit": "php -d memory_limit=1G ./vendor/bin/phpunit --testdox --colors=always",
+    "test-coverage": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --testdox --colors=always --coverage-html coverage --coverage-clover coverage/coverage.xml --testdox-html coverage/testdox.html && composer badge",
     "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license . && ./vendor/bin/badger badge:coverage .",
     "cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes"
   },
