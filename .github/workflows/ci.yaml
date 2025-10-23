@@ -33,3 +33,6 @@ jobs:
 
       - name: Run PHP CS Fixer
         run: composer cs
+
+      - name: Run PHP Unit Tests
+        run: composer unit
