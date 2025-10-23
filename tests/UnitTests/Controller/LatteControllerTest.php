@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CloudBase\LatteHelper\Tests\UnitTests\Controller;
 
 use CloudBase\LatteHelper\Tests\TestController;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,27 +22,21 @@ class LatteControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $user = $this->createMock(UserInterface::class);
-        $token = $this->createMock(TokenInterface::class);
-        $token->method('getUser')->willReturn($user);
+        $this->controller = new TestController($this->getMockContainer($this->getMockTokenStorage(), $this->getRequestStack()));
+    }
 
-        $tokenStorage = $this->createMock(TokenStorageInterface::class);
-        $tokenStorage->method('getToken')->willReturn($token);
-        $session = new Session(new MockArraySessionStorage());
-        $request = new Request();
-        $request->setSession($session);
+    public function testItRendersTemplate(): void
+    {
+        $this->assertSame(200, $this->controller->index()->getStatusCode());
+    }
 
-        $requestStack = new RequestStack();
-        $requestStack->push($request);
-
-        // Configure container mock
+    private function getMockContainer(TokenStorageInterface $tokenStorage, RequestStack $requestStack): ContainerInterface&MockObject
+    {
         $container = $this->createMock(ContainerInterface::class);
-
         $container->method('has')
             ->willReturnCallback(function (string $id) {
                 return in_array($id, ['security.token_storage', 'request_stack'], true);
             });
-
         $container->method('get')
             ->willReturnCallback(function (string $id) use ($tokenStorage, $requestStack) {
                 return match ($id) {
@@ -51,13 +46,30 @@ class LatteControllerTest extends TestCase
                 };
             });
 
-        $this->controller = new TestController($container);
+        return $container;
     }
 
-    public function testItRendersTemplate(): void
+    private function getRequestStack(): RequestStack
     {
-        $response = $this->controller->index();
+        $session = new Session(new MockArraySessionStorage());
+        $request = new Request();
+        $request->setSession($session);
 
-        $this->assertSame(200, $response->getStatusCode());
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        return $requestStack;
+    }
+
+    private function getMockTokenStorage(): TokenStorageInterface&MockObject
+    {
+        $user = $this->createMock(UserInterface::class);
+        $token = $this->createMock(TokenInterface::class);
+        $token->method('getUser')->willReturn($user);
+
+        $tokenStorage = $this->createMock(TokenStorageInterface::class);
+        $tokenStorage->method('getToken')->willReturn($token);
+
+        return $tokenStorage;
     }
 }

@@ -12,6 +12,7 @@
     }
   },
   "require": {
+    "php": "^8.3",
     "latte/latte": "^3.0",
     "symfony/http-foundation": "^7.3",
     "symfony/framework-bundle": "^7.3",
@@ -24,11 +25,12 @@
     "friendsofphp/php-cs-fixer": "^3.89"
   },
   "scripts": {
-    "stan": "./vendor/bin/phpstan analyse -c phpstan.neon",
+    "stan": "./vendor/bin/phpstan analyse --no-progress -c phpstan.neon",
+    "unit": "php -d memory_limit=1G ./vendor/bin/phpunit --testdox --colors=always --coverage-text --coverage-clover=coverage.xml",
     "test": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --testdox --colors=always --coverage-html coverage --coverage-clover coverage/coverage.xml --testdox-html coverage/testdox.html && composer badge",
     "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license . && ./vendor/bin/badger badge:coverage .",
     "cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes"
   },
-  "version": "0.3.4",
+  "version": "0.3.5",
   "license": "GPL-3.0-or-later"
 }

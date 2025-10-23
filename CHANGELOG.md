@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.5] - 2025-10-23
+### Added
+- Added automated CI pipeline.
+
+### Changed
+- Refactored unit test for `AbstractLatteController` to break down into smaller methods.
+
 ## [0.3.4] - 2025-10-22
 ### Added
 - Added PHP Stan at its strictest level.
