@@ -2,11 +2,11 @@
 
 <p>
 <!-- Version Badge -->
-<img src="https://img.shields.io/badge/Version-0.3.5-blue" alt="Version 0.3.5">
+<img src="https://img.shields.io/badge/Version-1.0.0-blue" alt="Version 1.0.0">
 <!-- License Badge -->
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
 <!-- Coverage Badge -->
-<img src="https://img.shields.io/badge/Coverage-75.61%25-abcb1c" alt="Coverage 75.61%">
+<img src="https://img.shields.io/badge/Coverage-54.55%25-cb9b1c" alt="Coverage 54.55%">
 </p>
 
 An unofficial helper package for rendering Latte templates in Symfony applications.
@@ -15,6 +15,30 @@ An unofficial helper package for rendering Latte templates in Symfony applicatio
 ```bash
 composer require cloudbase/latte-helper
 ```
+
+Then add the following to the imports section in your `config/services.yaml`:
+
+```yaml
+imports:
+  - { resource: '../vendor/cloudbase/latte-helper/config/services.yaml' }
+```
+
+You'll also need to add some configuration for your Latte controllers:
+
+```yaml
+services:
+  App\Controller\:
+    resource: '../src/Controller'
+    tags: [ 'controller.service_arguments' ]
+    calls:
+      - method: setLatteFactory
+        arguments:
+          - '@CloudBase\LatteHelper\Classes\Latte\LatteEngineFactory'
+```
+
+> You don't need to add this for every single controller, this is just a reference to the directory where your 
+> controllers are stored. Add this definition for each directory containing Latte controllers. This does however mean that
+> **every** controller inside that directory is expected to be an extension of `AbstractLatteController` controller.
 
 ## 🧩 Usage
 
