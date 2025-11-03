@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2025-11-03
+### Added
+- Added `LatteEngineFactory` to provide a more flexible way to configure the Latte engine.
+- Added `config/services.yaml` to register the `LatteEngineFactory` as a service.
+
+### Changed
+- Controllers now require additional service configuration.
+
+### Removed
+- Removed `EngineBuilder` in favour of `LatteEngineFactory`.
+
 ## [0.3.5] - 2025-10-23
 ### Added
 - Added automated CI pipeline.

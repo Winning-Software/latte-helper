@@ -11,7 +11,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-final class LatteEngineFactory
+class LatteEngineFactory
 {
     /**
      * @param ContainerInterface $container

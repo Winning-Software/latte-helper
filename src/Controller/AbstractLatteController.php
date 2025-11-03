@@ -7,6 +7,8 @@ namespace CloudBase\LatteHelper\Controller;
 use CloudBase\LatteHelper\Classes\Latte\Trait\LatteFactoryTrait;
 use CloudBase\LatteHelper\Classes\LatteAwareApplication;
 use CloudBase\LatteHelper\Classes\LatteAwareApplicationBuilder;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,15 +27,19 @@ abstract class AbstractLatteController extends AbstractController
      */
     protected function renderTemplate(string $template, array $data = []): Response
     {
-        $engine = $this->getEngine($this->templateDir);
+        try {
+            $engine = $this->getEngine($this->templateDir);
 
-        if (!str_contains($template, '.latte')) {
-            $template .= '.latte';
+            if (!str_contains($template, '.latte')) {
+                $template .= '.latte';
+            }
+
+            return new Response(
+                $engine->renderToString($template, array_merge($this->globalData(), $data))
+            );
+        } catch (ContainerExceptionInterface $e) {
+            return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        return new Response(
-            $engine->renderToString($template, array_merge($this->globalData(), $data))
-        );
     }
 
     protected function getApp(): LatteAwareApplication

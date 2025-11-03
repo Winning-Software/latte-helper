@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace CloudBase\LatteHelper\Classes\Latte\Trait;
 
 use CloudBase\LatteHelper\Classes\Latte\LatteEngineFactory;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Latte\Engine;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 trait LatteFactoryTrait
 {
@@ -25,7 +27,14 @@ trait LatteFactoryTrait
         return $this->latteFactory;
     }
 
-    protected function getEngine(string $templateDir): \Latte\Engine
+    /**
+     * @param string $templateDir
+     *
+     * @throws ContainerExceptionInterface|NotFoundExceptionInterface
+     *
+     * @return Engine
+     */
+    protected function getEngine(string $templateDir): Engine
     {
         return $this->getLatteFactory()->createEngine($templateDir);
     }
