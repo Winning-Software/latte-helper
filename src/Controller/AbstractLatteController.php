@@ -8,7 +8,6 @@ use CloudBase\LatteHelper\Classes\Latte\Trait\LatteFactoryTrait;
 use CloudBase\LatteHelper\Classes\LatteAwareApplication;
 use CloudBase\LatteHelper\Classes\LatteAwareApplicationBuilder;
 use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
