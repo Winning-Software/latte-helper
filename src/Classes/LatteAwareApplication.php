@@ -7,9 +7,11 @@ namespace CloudBase\LatteHelper\Classes;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class LatteAwareApplication
 {
+    private ?CsrfTokenManagerInterface $csrfManager = null;
     private RequestStack $requestStack;
     private Session $session;
     private ?UserInterface $user;
@@ -46,6 +48,20 @@ class LatteAwareApplication
     public function setUser(?UserInterface $user): void
     {
         $this->user = $user;
+    }
+
+    public function getCsrf(string $id): string
+    {
+        if (!$this->csrfManager) {
+            throw new \LogicException('CSRF manager not available.');
+        }
+
+        return $this->csrfManager->getToken($id)->getValue();
+    }
+
+    public function setCsrfManager(CsrfTokenManagerInterface $manager): void
+    {
+        $this->csrfManager = $manager;
     }
 
     /**
