@@ -8,6 +8,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class LatteAwareApplicationBuilder
 {
@@ -32,6 +33,13 @@ class LatteAwareApplicationBuilder
             $app->setRequestStack($requestStack);
         } catch (ContainerExceptionInterface|\TypeError $e) {
             throw new \RuntimeException('request_stack service not found');
+        }
+
+        try {
+            /** @var CsrfTokenManagerInterface $csrf */
+            $csrf = $container->get('security.csrf.token_manager');
+            $app->setCsrfManager($csrf);
+        } catch (\Throwable) {
         }
 
         return $app;

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2025-11-17
+### Added
+- Added CSRF support.
+
 ## [1.0.0] - 2025-11-03
 ### Added
 - Added `LatteEngineFactory` to provide a more flexible way to configure the Latte engine.
