@@ -7,6 +7,7 @@ namespace CloudBase\LatteHelper\Classes;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -41,6 +42,14 @@ class LatteAwareApplicationBuilder
             $app->setCsrfManager($csrf);
         } catch (\Throwable) {
         }
+
+        try {
+            /** @var RouterInterface $router */
+            $router = $container->get('router');
+            $app->setRouter($router);
+        } catch (\Throwable) {
+        }
+
 
         return $app;
     }

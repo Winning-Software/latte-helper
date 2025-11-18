@@ -6,6 +6,8 @@ namespace CloudBase\LatteHelper\Classes;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -15,6 +17,7 @@ class LatteAwareApplication
     private RequestStack $requestStack;
     private Session $session;
     private ?UserInterface $user;
+    private ?RouterInterface $router = null;
 
     public function getRequestStack(): RequestStack
     {
@@ -62,6 +65,27 @@ class LatteAwareApplication
     public function setCsrfManager(CsrfTokenManagerInterface $manager): void
     {
         $this->csrfManager = $manager;
+    }
+
+    public function setRouter(RouterInterface $router): void
+    {
+        $this->router = $router;
+    }
+
+    /**
+     * @param string $routeName
+     * @param array<string, mixed> $parameters
+     * @param int $referenceType
+     *
+     * @return string
+     */
+    public function generateUrl(string $routeName, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    {
+        if (!$this->router) {
+            throw new \LogicException('Router not available.');
+        }
+
+        return $this->router->generate($routeName, $parameters, $referenceType);
     }
 
     /**
